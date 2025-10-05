@@ -6,6 +6,7 @@ import './App.css'
 
 
 import NavBar from './components/nav_bar'
+import C_footer from './components/C_footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,8 @@ function App() {
         <a href="#" class="button-explorar-productos" role="button">Explorar Productos</a>
       </div>
     </section>
+
+    <C_footer />
     </>
   )
 }
