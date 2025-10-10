@@ -1,5 +1,4 @@
-
-
+import { Link } from 'react-router-dom'
 import navbar from 'react-bootstrap/Navbar';
 
 
@@ -17,8 +16,8 @@ function NavBar() {
 
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link active" href="#" aria-current="page">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Catálogo</a></li>
+            <li className="nav-item"><Link className="nav-link active" to="/" aria-current="page">Inicio</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/productos">Productos</Link></li>
             <li class="nav-item"><a class="nav-link" href="#">Sobre Nosotros</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
             <li class="nav-item"><a class="nav-link" href="comunidad.html">Comunidad</a></li>
