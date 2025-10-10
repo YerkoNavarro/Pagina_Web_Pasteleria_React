@@ -1,27 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
-
-
-
-import NavBar from './components/nav_bar'
-import UnFooter from './components/C_footer'
-import UnCarrusel from './components/carrusel'
-
+import Inicio from './paginas/inicio'
 
 function App() {
-
-
   return (
     <>
-      <promo_bar>
-          <div class="promo-bar">
-            <div class="promo-texto" role="region" aria-label="Promociones actuales">
-          🧁 <strong>¡Promo!</strong> 2x1 en tortas 🍰 | 15% de descuento en pedidos online 🚚 | ¡Envíos gratis por aniversario 🎉!
-            </div>
-          </div>
-      </promo_bar>
       <NavBar />
 
       <section class="hero-banner text-center text-white d-flex flex-column justify-content-center align-items-center" role="banner" aria-label="Banner principal">
@@ -31,7 +14,9 @@ function App() {
           <a href="#" class="button-explorar-productos" role="button">Explorar Productos</a>
         </div>
       </section>
-      
+
+      <UnCarrusel />
+
       <UnFooter />
     </>
   )
