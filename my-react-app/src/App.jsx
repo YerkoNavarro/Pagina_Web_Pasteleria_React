@@ -31,8 +31,6 @@ function App() {
           <a href="#" class="button-explorar-productos" role="button">Explorar Productos</a>
         </div>
       </section>
-
-      <UnCarrusel />
       
       <UnFooter />
     </>
