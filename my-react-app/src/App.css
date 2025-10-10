@@ -1,0 +1,35 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background: #FFF5E1;
+    color: #5D4037; /* Marrón oscuro */
+    margin: 0;
+    padding: 0;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Pacifico', cursive;
+    color: #8B4513; /*color Chocolate  xd*/
+}
+
+/* Banner */
+.text-center.bg-primary {
+    background-color: #FFE6E6 !important;
+    color: #5D4037 !important;
+    padding: 60px 0;
+    text-shadow: none;
+}
+
+.big-title {
+    color:#8B4513 ;
+}
+
+
+
+
+footer {
+    background-color: #FFE6E6;
+    color: #5D4037;
+    padding: 15px 0;
+    text-align: center;
+}
