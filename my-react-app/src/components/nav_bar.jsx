@@ -7,7 +7,7 @@ import navbar from 'react-bootstrap/Navbar';
 function NavBar() {
     return (
   
-    <nav class="navbar navbar-expand-lg bg-body-tertiary pastel-navbar fixed-top" aria-label="Menú principal">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary pastel-navbar " aria-label="Menú principal">
       <div class="container">
         <a class="navbar-brand" href="#">Pastelería 1000 Sabores</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 

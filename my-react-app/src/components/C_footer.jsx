@@ -1,6 +1,6 @@
 
 
-function C_footer(){
+function UnFooter(){
     return(
 
         <footer class="text-center py-4 pastel-footer fixed-bottom" role="contentinfo">
@@ -12,4 +12,4 @@ function C_footer(){
 
 }
 
-export default C_footer     
+export default UnFooter;    
