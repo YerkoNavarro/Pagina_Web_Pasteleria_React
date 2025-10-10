@@ -15,6 +15,13 @@ function App() {
 
   return (
     <>
+      <promo_bar>
+          <div class="promo-bar">
+            <div class="promo-texto" role="region" aria-label="Promociones actuales">
+          🧁 <strong>¡Promo!</strong> 2x1 en tortas 🍰 | 15% de descuento en pedidos online 🚚 | ¡Envíos gratis por aniversario 🎉!
+            </div>
+          </div>
+      </promo_bar>
       <NavBar />
 
       <section class="hero-banner text-center text-white d-flex flex-column justify-content-center align-items-center" role="banner" aria-label="Banner principal">
@@ -26,7 +33,7 @@ function App() {
       </section>
 
       <UnCarrusel />
-
+      
       <UnFooter />
     </>
   )

@@ -6,6 +6,21 @@ body {
     padding: 0;
 }
 
+.promo-texto {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 20s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Pacifico', cursive;
