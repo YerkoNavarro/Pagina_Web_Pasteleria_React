@@ -5,10 +5,10 @@ import ProductCard from '../components/card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import imagenAlfajor from '../imagenes/Gemini_Generated_Image_alfajor.png'
-import imagenCupcakes from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 import imagenPastel from '../imagenes/Gemini_Generated_Image_pastel.png'
 import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
-import imagenBrownie from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
+import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
+import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 
 function Productos() {
     const productos = [
@@ -27,10 +27,10 @@ function Productos() {
         },
         
         {
-            Nombre: 'Brownies de Nuez',
-            Descripcion: 'Brownies húmedos con trozos de nuez tostada',
+            Nombre: 'Cafe Capuccino',
+            Descripcion: 'Cafe capuccino con leche',
             Precio: '800',
-            Imagen: imagenBrownie
+            Imagen: imagenCafe
         },
         {
             Nombre: 'Alfajor Artesanal',
@@ -40,10 +40,10 @@ function Productos() {
         },
         
         {
-            Nombre: 'Cupcakes Decorados',
-            Descripcion: 'Caja de seis cupcakes con buttercream de colores',
+            Nombre: 'Sandwich',
+            Descripcion: 'Sandwich de jamón y queso',
             Precio: '950',
-            Imagen: imagenCupcakes
+            Imagen: imagenSandwich
         },
         
     ]
