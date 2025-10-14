@@ -1,10 +1,10 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
-import UnCarrusel from '../components/carrusel'
-
+import PromotionBar from '../components/promotion_bar'
 function Inicio() {
   return (
     <>
+      <PromotionBar />
       <NavBar />
 
       <section className="hero-banner text-center text-white d-flex flex-column justify-content-center align-items-center" role="banner" aria-label="Banner principal">
@@ -14,9 +14,6 @@ function Inicio() {
           <a href="#" className="button-explorar-productos" role="button">Explorar Productos</a>
         </div>
       </section>
-
-      <UnCarrusel />
-
       <UnFooter />
     </>
   )
