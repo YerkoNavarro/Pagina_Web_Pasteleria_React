@@ -6,6 +6,35 @@ body {
     padding: 0;
 }
 
+.promo-texto {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 20s linear infinite;
+  padding-left: 100%;
+}
+
+.promo-barra {
+  width: 100%;
+  background-color: #FFE6E6;
+  color: #5D4037;
+  padding: 6px 0;
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid #f2caca;
+  font-size: 0.95rem;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.big-title {
+    color:#8B4513 ;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Pacifico', cursive;
@@ -23,7 +52,6 @@ h1, h2, h3, h4, h5, h6 {
 .big-title {
     color:#8B4513 ;
 }
-
 
 
 
