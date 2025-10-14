@@ -15,7 +15,7 @@ function Inicio() {
         </div>
       </section>
 
-      <UnCarrusel />
+      
 
       <UnFooter />
     </>
