@@ -1,3 +1,4 @@
+/* Fuentes y colores generales */
 body {
     font-family: 'Lato', sans-serif;
     background: #FFF5E1;
@@ -6,10 +7,59 @@ body {
     padding: 0;
 }
 
+.promo-texto {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 20s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.big-title {
+    color:#8B4513 ;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Pacifico', cursive;
     color: #8B4513; /*color Chocolate  xd*/
+}
+
+.redes-top {
+    position: absolute; /* o fixed si quieres que se quede siempre visible */
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+
+.redes-top a {
+    color: #8B4513;           /* Marrón, como tu estilo general */
+    font-size: 1.8rem;         /* Tamaño del ícono */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.redes-top a:hover {
+  color: #E1306C;            /* Color de Instagram al hacer hover */
+}
+/* Navbar */
+.navbar {
+    background-color: #FFE6E6; /* Rosa pastel como la cancion wtf*/
+}
+
+.navbar-brand {
+    font-family: 'Pacifico', cursive;
+    color: #8B4513 !important;
+}
+
+.nav-link {
+    color: #5D4037 !important;
 }
 
 /* Banner */
@@ -20,13 +70,104 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: none;
 }
 
-.big-title {
-    color:#8B4513 ;
+
+.text-center.bg-primary h1 {
+    font-family: 'Pacifico', cursive;
+    color: #8B4513;
 }
 
+.text-center.bg-primary p {
+    font-weight: 500;
+}
+
+.button-explorar-productos {
+    background-color: #8B4513;
+    border: 2px solid #8B4513;
+    color: white;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-explorar-productos:hover {
+    background-color: white;
+    color: #8B4513;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen historia */
+.img-fluid {
+    border-radius: 8px;
+}
+
+.carousel-img {
+    height: 600px;
+    object-fit: cover; /* Rellenador de espacios*/
+  }
+
+  /* Estilo del texto encima de la imagen */
+  .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    padding: 1.5rem;
+    border-radius: 10px;
+    bottom: 20px; /* Ajuste de la posición */
+  }
+
+  .carousel-caption h5 {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .carousel-caption p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+  }
+
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .carousel-img {
+      height: 300px;
+    }
+
+    .carousel-caption {
+      font-size: 0.9rem;
+      padding: 1rem;
+    }
+
+    .carousel-caption h5 {
+      font-size: 1.3rem;
+    }
+
+    .carousel-caption p {
+      font-size: 0.85rem;
+    }
+  }
 
 
+/* Categorías */
+.category-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+}
 
+.img-Historia{
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+/* Footer */
 footer {
     background-color: #FFE6E6;
     color: #5D4037;
