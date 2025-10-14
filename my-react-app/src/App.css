@@ -1,3 +1,4 @@
+/* Fuentes y colores generales */
 body {
     font-family: 'Lato', sans-serif;
     background: #FFF5E1;
@@ -41,6 +42,37 @@ h1, h2, h3, h4, h5, h6 {
     color: #8B4513; /*color Chocolate  xd*/
 }
 
+.redes-top {
+    position: absolute; /* o fixed si quieres que se quede siempre visible */
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+
+.redes-top a {
+    color: #8B4513;           /* Marrón, como tu estilo general */
+    font-size: 1.8rem;         /* Tamaño del ícono */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.redes-top a:hover {
+  color: #E1306C;            /* Color de Instagram al hacer hover */
+}
+/* Navbar */
+.navbar {
+    background-color: #FFE6E6; /* Rosa pastel como la cancion wtf*/
+}
+
+.navbar-brand {
+    font-family: 'Pacifico', cursive;
+    color: #8B4513 !important;
+}
+
+.nav-link {
+    color: #5D4037 !important;
+}
+
 /* Banner */
 .text-center.bg-primary {
     background-color: #FFE6E6 !important;
@@ -49,8 +81,35 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: none;
 }
 
-.big-title {
-    color:#8B4513 ;
+
+.text-center.bg-primary h1 {
+    font-family: 'Pacifico', cursive;
+    color: #8B4513;
+}
+
+.text-center.bg-primary p {
+    font-weight: 500;
+}
+
+.button-explorar-productos {
+    background-color: #8B4513;
+    border: 2px solid #8B4513;
+    color: white;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-explorar-productos:hover {
+    background-color: white;
+    color: #8B4513;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 
