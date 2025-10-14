@@ -1,6 +1,7 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import UnCarrusel from '../components/carrusel'
+import PromotionBar from '../components/promotion_bar'
 import personal from '../imagenes/Gemini_Generated_Image_bvi42dbvi42dbvi4.png'
 import pasteleria from '../imagenes/Gemini_Generated_Image_lfoh7flfoh7flfoh.png'
 import exterior from '../imagenes/Gemini_Generated_Image_ic921yic921yic92.png'
@@ -9,6 +10,7 @@ import exterior from '../imagenes/Gemini_Generated_Image_ic921yic921yic92.png'
 function Inicio() {
   return (
     <>
+      <PromotionBar />
       <NavBar />
 
       <section className="hero-banner text-center text-white d-flex flex-column justify-content-center align-items-center" role="banner" aria-label="Banner principal">

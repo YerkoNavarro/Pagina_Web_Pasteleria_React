@@ -14,6 +14,17 @@ body {
   padding-left: 100%;
 }
 
+.promo-barra {
+  width: 100%;
+  background-color: #FFE6E6;
+  color: #5D4037;
+  padding: 6px 0;
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid #f2caca;
+  font-size: 0.95rem;
+}
+
 @keyframes scroll-left {
   0% {
     transform: translateX(0%);
@@ -101,73 +112,8 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Imagen historia */
-.img-fluid {
-    border-radius: 8px;
-}
-
-.carousel-img {
-    height: 600px;
-    object-fit: cover; /* Rellenador de espacios*/
-  }
-
-  /* Estilo del texto encima de la imagen */
-  .carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
-    padding: 1.5rem;
-    border-radius: 10px;
-    bottom: 20px; /* Ajuste de la posición */
-  }
-
-  .carousel-caption h5 {
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-
-  .carousel-caption p {
-    margin: 0.3rem 0;
-    font-size: 1rem;
-  }
-
-  /* Estilos responsivos */
-  @media (max-width: 768px) {
-    .carousel-img {
-      height: 300px;
-    }
-
-    .carousel-caption {
-      font-size: 0.9rem;
-      padding: 1rem;
-    }
-
-    .carousel-caption h5 {
-      font-size: 1.3rem;
-    }
-
-    .carousel-caption p {
-      font-size: 0.85rem;
-    }
-  }
 
 
-/* Categorías */
-.category-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 10px;
-}
-
-.img-Historia{
-    width: 100%;
-    height: auto;
-    max-height: 400px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-    border: 2px solid #000;
-    border-radius: 8px;
-}
-/* Footer */
 footer {
     background-color: #FFE6E6;
     color: #5D4037;

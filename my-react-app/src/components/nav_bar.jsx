@@ -18,10 +18,11 @@ function NavBar() {
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item"><Link className="nav-link active" to="/" aria-current="page">Inicio</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/productos">Productos</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/comunidad">Comunidad</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/usuario">Usuario</Link></li>
             <li class="nav-item"><a class="nav-link" href="#">Sobre Nosotros</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
-            <li class="nav-item"><a class="nav-link" href="comunidad.html">Comunidad</a></li>
-            <li class="nav-item"><a class="nav-link" href="usuario.html">Usuario</a></li>
+            
           </ul>
 
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
