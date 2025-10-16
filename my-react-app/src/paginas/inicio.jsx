@@ -20,6 +20,7 @@ function Inicio() {
       </section>
       <div className="my-5" /> 
       <UnCarrusel imagen1={imagenTortaGuiness} imagen2={imagenPasteles} imagen3={imagenPastel} />
+      <div className="my-5 mb-5" /> {/* espaciado */}
       <UnFooter />
     </>
   )
