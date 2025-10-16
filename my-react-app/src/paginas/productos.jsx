@@ -9,9 +9,12 @@ import imagenPastel from '../imagenes/Gemini_Generated_Image_pastel.png'
 import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
 import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
 import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
+import SearchBar from '../components/SearchBar'
+import { useMemo, useState } from 'react'
 
 import Container from 'react-bootstrap/Container'
 function Productos() {
+    const [term, setTerm] = useState('')
     const productos = [
         {
             Nombre: 'Pastel de Chocolate',
@@ -49,6 +52,15 @@ function Productos() {
         
     ]
 
+    const filtrados = useMemo(() => {
+        const t = term.trim().toLowerCase()
+        if (!t) return productos
+        return productos.filter(p =>
+            p.Nombre.toLowerCase().includes(t) ||
+            p.Descripcion.toLowerCase().includes(t)
+        )
+    }, [term, productos])
+
     return (
         <>
             <NavBar />
@@ -59,8 +71,11 @@ function Productos() {
             <div className="my-5" /> 
             </section>
             <Container>
+            <div className="mb-4">
+                <SearchBar value={term} onChange={setTerm} />
+            </div>
             <Row className="g-4 justify-content-center">
-            {productos.map(producto => (
+            {filtrados.map(producto => (
                 <Col key={producto.Nombre} xs={12} sm={6} md={4} lg={3}>
                     <ProductCard
                         Nombre={producto.Nombre}
