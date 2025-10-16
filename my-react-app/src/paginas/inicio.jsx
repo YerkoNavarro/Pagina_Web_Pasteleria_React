@@ -15,7 +15,7 @@ function Inicio() {
         <div className="big-title">
           <h1 className="display-4">¡50 Años Endulzando Chile!</h1>
           <p className="lead">Participamos en el récord Guinness de la torta más grande del mundo 🎂</p>
-          <a className="button-explorar-productos" href="/productos" role="button">Explorar Productos</a>
+          <a className="button-explorar-productos" href="/productos" role="button">Explorar Productos</a> {/* enlace a la página de productos */}
         </div>
       </section>
       <div className="my-5" /> 
