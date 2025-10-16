@@ -10,6 +10,7 @@ import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
 import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
 import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 
+import Container from 'react-bootstrap/Container'
 function Productos() {
     const productos = [
         {
@@ -57,6 +58,7 @@ function Productos() {
                 </div>
             <div className="my-5" /> 
             </section>
+            <Container>
             <Row className="g-4 justify-content-center">
             {productos.map(producto => (
                 <Col key={producto.Nombre} xs={12} sm={6} md={4} lg={3}>
@@ -68,6 +70,8 @@ function Productos() {
                 </Col>
             ))}
             </Row>
+            </Container>            
+            <div className="my-5" /> {/* espaciado */}
             <div className="my-5" /> {/* espaciado */}
             <UnFooter />
         </>
