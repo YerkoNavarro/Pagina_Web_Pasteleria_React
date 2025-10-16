@@ -19,15 +19,15 @@ function NavBar() {
             <li className="nav-item"><Link className="nav-link active" to="/" aria-current="page">Inicio</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/productos">Productos</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/comunidad">Comunidad</Link></li>
-            {/*<li className="nav-item"><Link className="nav-link" to="/usuario">Usuario</Link></li>*/}
+            <li className="nav-item"><Link className="nav-link" to="/usuario">Usuario</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/sobrenosotros">Sobre Nosotros</Link></li>
-            {/*<li className="nav-item"><Link className="nav-link" to="/contacto">Contacto</Link></li>*/}
+            <li className="nav-item"><Link className="nav-link" to="/contacto">Contacto</Link></li>
             
           </ul>
 
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            {/*<li class="nav-item"><a class="nav-link" href="login.html">Iniciar Sesión</a></li>*/}
-            {/*<li class="nav-item"><a class="nav-link" href="registro.html">Registrarse</a></li>*/}
+            <li class="nav-item"><Link className="nav-link" to="/login">Iniciar Sesión</Link></li>
+            <li class="nav-item"><Link className="nav-link" to="/register">Registrarse</Link></li>
           </ul>
         </div>
       </div>
