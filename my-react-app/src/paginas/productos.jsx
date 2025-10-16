@@ -71,8 +71,7 @@ function Productos() {
             ))}
             </Row>
             </Container>            
-            <div className="my-5" /> {/* espaciado */}
-            <div className="my-5" /> {/* espaciado */}
+            <div className="my-5 mb-5" /> {/* espaciado */}
             <UnFooter />
         </>
     )
