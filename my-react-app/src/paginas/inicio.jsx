@@ -5,6 +5,7 @@ import PromotionBar from '../components/promotion_bar'
 import imagenTortaGuiness from '../imagenes/Generated Image October 15, 2025 - 10_20PM.png'
 import imagenPasteles from '../imagenes/Generated Image October 15, 2025 - 10_18PM.png'
 import imagenPastel from '../imagenes/Generated Image October 15, 2025 - 10_19PM.png'
+import CommentSection from '../components/CommentSection'
 function Inicio() {
   return (
     <>
@@ -23,61 +24,44 @@ function Inicio() {
       <div className="my-5" />
 
       <section className="py-5 bg-light">
-        <div className="container">
-          <div className="row g-4">
-            <div className="col-md-4">
-              <div className="p-4 bg-white rounded shadow-sm h-100">
-                <h3 className="h5 mb-3">Nuestra Historia</h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae augue sit amet risus
-                  bibendum porttitor. Vivamus vitae erat at mi cursus posuere. Quisque rutrum massa a lacus vehicula,
-                  at vulputate urna congue.
-                </p>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="p-4 bg-white rounded shadow-sm h-100">
-                <h3 className="h5 mb-3">Ingredientes</h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin euismod, tortor id posuere fringilla,
-                  sapien tortor efficitur odio, vitae pulvinar velit neque non orci. Praesent sed pretium urna.
-                </p>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="p-4 bg-white rounded shadow-sm h-100">
-                <h3 className="h5 mb-3">Compromiso</h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper, libero ac finibus sollicitudin,
-                  mauris nibh eleifend tellus, in aliquam nisi ligula in sem. Suspendisse potenti.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div className="container">
+        <h2 className="text-center section-title mb-4">Nuestra Comunidad Dulce</h2>
+        <p className="text-center mb-5">
+          En Pastelería 1000 Sabores, creemos que la repostería une corazones. Nuestra comunidad es el alma de nuestra pasión. 
+          Aquí compartimos historias, recetas, eventos y mucho más para que cada dulce experiencia sea inolvidable.
+        </p>
 
-      <section className="py-5">
-        <div className="container">
-          <div className="row align-items-center g-4">
-            <div className="col-md-6">
-              <h3 className="h4 mb-3">Sabores que enamoran</h3>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas consequat, lorem non placerat
-                faucibus, odio lorem cursus dui, quis iaculis magna tortor ac arcu. Nullam ultricies tortor a nisl
-                accumsan, vitae fermentum risus condimentum.
-              </p>
+        <div className="row justify-content-center g-4">
+          <div className="col-md-4">
+            <div className="community-card p-4 bg-white rounded shadow-sm h-100">
+              <h5 className="mb-3">Eventos y Talleres</h5>
+              <p>Únete a nuestros eventos y talleres para aprender a crear tus propias delicias y compartir con otros amantes de la repostería.</p>
             </div>
-            <div className="col-md-6">
-              <p className="mb-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sodales mi non lectus iaculis, non
-                consequat risus accumsan. Duis nec nunc sed neque dignissim bibendum non sit amet lorem. Cras nec
-                blandit erat.
-              </p>
+          </div>
+
+          <div className="col-md-4">
+            <div className="community-card p-4 bg-white rounded shadow-sm h-100">
+              <h5 className="mb-3">Historias de Clientes</h5>
+              <p>Descubre las experiencias y anécdotas de quienes han endulzado momentos especiales con nosotros.</p>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div className="community-card p-4 bg-white rounded shadow-sm h-100">
+              <h5 className="mb-3">Recetas Compartidas</h5>
+              <p>Comparte y explora recetas originales, trucos y consejos de la comunidad para llevar tu pasión por la repostería al siguiente nivel.</p>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+
+      <section className="py-5" aria-labelledby="comentarios-title">
+    <div className="container" style={{maxWidth: '900px'}}>
+      <h2 id="comentarios-title" className="section-title mb-3 text-center">Comentarios de Nuestra Comunidad</h2>
+      <CommentSection />
+      </div>
+    </section>
 
       <div className="my-5 mb-5" /> {/* espaciado */}
       <UnFooter />

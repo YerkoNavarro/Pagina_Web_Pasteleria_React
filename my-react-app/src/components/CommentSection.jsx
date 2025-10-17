@@ -92,7 +92,7 @@ const CommentSection = () => {
         </form>
 
         {comments.length === 0 ? (
-          <p className="text-center text-muted">Aún no hay comentarios.</p>
+          <p className="text-left text-muted">Aún no hay comentarios.</p>
         ) : (
           <ul className="list-unstyled">
             {comments.map((c) => (

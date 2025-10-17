@@ -39,29 +39,12 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Pacifico', cursive;
-    color: #8B4513; /*color Chocolate  xd*/
+    color: #ffffff; /*color Chocolate  xd*/
 }
 
-.redes-top {
-    position: absolute; /* o fixed si quieres que se quede siempre visible */
-    top: 15px;
-    left: 15px;
-    z-index: 1000;
-}
-
-.redes-top a {
-    color: #8B4513;           /* Marrón, como tu estilo general */
-    font-size: 1.8rem;         /* Tamaño del ícono */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.redes-top a:hover {
-  color: #E1306C;            /* Color de Instagram al hacer hover */
-}
 /* Navbar */
-.navbar {
-    background-color: #FFE6E6; /* Rosa pastel como la cancion wtf*/
+.navbar.pastel-navbar {
+    background-color: #ffeadb!important;
 }
 
 .navbar-brand {
@@ -71,24 +54,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-link {
     color: #5D4037 !important;
-}
-
-/* Banner */
-.text-center.bg-primary {
-    background-color: #FFE6E6 !important;
-    color: #5D4037 !important;
-    padding: 60px 0;
-    text-shadow: none;
-}
-
-
-.text-center.bg-primary h1 {
-    font-family: 'Pacifico', cursive;
-    color: #8B4513;
-}
-
-.text-center.bg-primary p {
-    font-weight: 500;
 }
 
 .button-explorar-productos {
