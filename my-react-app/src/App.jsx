@@ -8,6 +8,7 @@ import Login from './paginas/login'
 import Register from './paginas/register'
 import Usuario from './paginas/usuario'
 import Contacto from './paginas/contacto'
+import Carro from './paginas/carro'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/usuario" element={<Usuario />} />
       <Route path="/contacto" element={<Contacto />} />
+      <Route path="/carro" element={<Carro />} />
     </Routes>
   )
 }
