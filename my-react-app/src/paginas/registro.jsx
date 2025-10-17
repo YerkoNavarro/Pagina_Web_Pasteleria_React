@@ -2,7 +2,7 @@ import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState } from 'react'
 
-function Usuario(){
+function Register(){
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -26,7 +26,7 @@ function Usuario(){
         <NavBar/>
         <section className="hero-banner text-center text-white d-flex flex-column justify-content-center align-items-center" role="banner" aria-label="Banner principal">
             <div className="big-title">
-            <h1 className="display-4">Usuario</h1>
+            <h1 className="display-4">Registrarse</h1>
             </div>
         </section>
         <div className="my-4" />
@@ -137,7 +137,7 @@ function Usuario(){
                             </div>
                         </div>
                         <div className="mt-3 d-grid">
-                            <button type="button" className="btn btn-success">Guardar</button>
+                            <button type="button" className="btn btn-success">Registrarse</button>
                         </div>
                     </div>
                 </div>
@@ -148,4 +148,4 @@ function Usuario(){
     );
 }
 
-export default Usuario;
+export default Register;

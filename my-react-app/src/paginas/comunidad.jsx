@@ -1,6 +1,7 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import PromotionBar from '../components/promotion_bar'
+import CommentSection from '../components/CommentSection'
 
 function Comunidad() {
   return (
@@ -43,28 +44,7 @@ function Comunidad() {
       <section className="py-5" aria-labelledby="comentarios-title">
     <div className="container" style={{maxWidth: '900px'}}>
       <h2 id="comentarios-title" className="section-title mb-3 text-center">Comentarios de Nuestra Comunidad</h2>
-      <p className="text-center mb-4">
-        Nos encanta escuchar lo que piensas sobre nuestros pasteles, eventos y todo lo que hacemos para endulzar tu vida.
-      </p>
-
-        <div className="comentarios-container">
-          <article className="comentario bg-white p-4 rounded shadow-sm">
-            <p>"La torta personalizada que encargué fue perfecta y deliciosa. ¡Gracias por hacer mi cumpleaños inolvidable!"</p>
-            <footer>– María G.</footer>
-          </article>
-
-          <article className="comentario bg-white p-4 rounded shadow-sm">
-            <p>"Los talleres son increíbles, aprendí trucos que no sabía y conocí gente con mi misma pasión por la repostería."</p>
-            <footer>– Carlos R.</footer>
-          </article>
-
-          <article className="comentario bg-white p-4 rounded shadow-sm">
-            <p>"Siempre confío en Pastelería 1000 Sabores para mis eventos, la calidad y sabor son incomparables."</p>
-            <footer>– Ana M.</footer>
-          </article>
-        </div>
-
-        <a href="#" className="btn-link-custom" role="button" aria-label="Ver más comentarios">Ver más comentarios</a>
+      <CommentSection />
       </div>
     </section>
     
