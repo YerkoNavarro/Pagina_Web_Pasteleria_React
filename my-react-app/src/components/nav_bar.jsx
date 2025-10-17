@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import navbar from 'react-bootstrap/Navbar';
+import { Navbar } from 'react-bootstrap';
 
-
+  
 
 function NavBar() {
     return (
@@ -21,13 +21,13 @@ function NavBar() {
             <li className="nav-item"><Link className="nav-link" to="/comunidad">Comunidad</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/usuario">Usuario</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/sobrenosotros">Sobre Nosotros</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/contacto">Contacto</Link></li>
-            
+            <li class="nav-item"><Link className="nav-link" to="/carro">Carrito</Link></li>
           </ul>
 
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><Link className="nav-link" to="/login">Iniciar Sesión</Link></li>
             <li class="nav-item"><Link className="nav-link" to="/register">Registrarse</Link></li>
+            
           </ul>
         </div>
       </div>
