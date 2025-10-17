@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* Navbar */
 .navbar {
-    background-color: #FFE6E6; /* Rosa pastel como la cancion wtf*/
+    background-color: #7c522f; 
 }
 
 .navbar-brand {
@@ -119,4 +119,12 @@ footer {
     color: #5D4037;
     padding: 15px 0;
     text-align: center;
+}
+
+
+.contacto-container {
+    background-color: #7c522f;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
 }
