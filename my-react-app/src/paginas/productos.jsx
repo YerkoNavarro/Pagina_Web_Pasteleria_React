@@ -12,6 +12,8 @@ import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.
 import SearchBar from '../components/SearchBar'
 import { useMemo, useState } from 'react'
 
+import { añadirAlCarro } from '../storage/gestionStorage'
+
 import Container from 'react-bootstrap/Container'
 function Productos() {
     const [term, setTerm] = useState('')
@@ -76,12 +78,22 @@ function Productos() {
             </div>
             <Row className="g-4 justify-content-center">
             {filtrados.map(producto => (
+
+               
+
                 <Col key={producto.Nombre} xs={12} sm={6} md={4} lg={3}>
+                    
+                    
                     <ProductCard
                         Nombre={producto.Nombre}
                         Descripcion={producto.Descripcion}
                         Precio={producto.Precio}
-                        Imagen={producto.Imagen}/>
+                        Imagen={producto.Imagen}
+                        onAgregar={añadirAlCarro}
+                        productoData={producto}/>
+                        
+
+                        
                 </Col>
             ))}
             </Row>
