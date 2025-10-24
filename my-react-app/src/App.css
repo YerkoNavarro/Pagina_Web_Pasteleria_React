@@ -34,7 +34,7 @@ body {
   }
 }
 .big-title {
-    color:#8B4513 ;
+    color: #8B4513;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -43,13 +43,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Navbar */
-<<<<<<< HEAD
 .navbar {
-    background-color: #7c522f; 
-=======
+    background-color: #7c522f;
+}
+
 .navbar.pastel-navbar {
-    background-color: #ffeadb!important;
->>>>>>> 02fe74d5106abb0b56ed1323c3773bd2c1fa8cdb
+    background-color: #ffeadb !important;
 }
 
 .navbar-brand {
