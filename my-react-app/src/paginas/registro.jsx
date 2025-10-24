@@ -1,7 +1,7 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState } from 'react'
-import { validateRegistroInput } from '../storage/gestionStorage'
+import { validateRegistroInput, setLogin, isLoggedIn } from '../storage/gestionStorage'
 
 function Register(){
     const [fullName, setFullName] = useState('')
@@ -14,6 +14,7 @@ function Register(){
     const [addressRef, setAddressRef] = useState('')
     const [profilePreview, setProfilePreview] = useState(null)
     const [errors, setErrors] = useState({})
+    const [status, setStatus] = useState('')
 
     const handleImageChange = (e) => {
         const file = e.target.files && e.target.files[0]
@@ -31,8 +32,10 @@ function Register(){
             password,
             confirmarPassword: confirmPassword,
         })
-        if(!valid){ setErrors(errors); return }
+        if(!valid){ setErrors(errors); setStatus(''); return }
         setErrors({})
+        setLogin({ email, token: 'token-demo' })
+        setStatus(isLoggedIn() ? 'Registro completado. Sesión iniciada.' : 'No se pudo iniciar sesión tras el registro')
     }
 
     return(
@@ -160,6 +163,9 @@ function Register(){
                             />
                         </div>
                         <div className="mt-3 d-grid">
+                            {status && (
+                                <div className="alert alert-info py-2 mb-2" role="status">{status}</div>
+                            )}
                             <button type="button" className="btn btn-success" onClick={handleRegister}>Registrarse</button>
                         </div>
                     </div>

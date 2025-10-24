@@ -1,10 +1,24 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState } from 'react'
+import { validateLoginInput, setLogin, isLoggedIn } from '../storage/gestionStorage'
 
 function Login(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState({})
+    const [status, setStatus] = useState('')
+    const handleLogin = () => {
+        const { valid, errors } = validateLoginInput({ email, password })
+        if(!valid){
+            setErrors(errors)
+            setStatus('')
+            return
+        }
+        setErrors({})
+        setLogin({ email, token: 'token-demo' })
+        setStatus(isLoggedIn() ? 'Sesión iniciada' : 'No se pudo iniciar sesión')
+    }
     return(
         <div className="d-flex flex-column min-vh-100">
             <NavBar/>
@@ -28,6 +42,9 @@ function Login(){
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="tucorreo@ejemplo.com"
                                 />
+                                {errors.email && (
+                                    <div className="text-danger small mt-1">{errors.email}</div>
+                                )}
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Contraseña</label>
@@ -38,8 +55,14 @@ function Login(){
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="********"
                                 />
+                                {errors.password && (
+                                    <div className="text-danger small mt-1">{errors.password}</div>
+                                )}
                             </div>
-                            <button className="btn btn-primary w-100" type="button">Iniciar sesión</button>
+                            {status && (
+                                <div className="alert alert-info py-2" role="status">{status}</div>
+                            )}
+                            <button className="btn btn-primary w-100" type="button" onClick={handleLogin}>Iniciar sesión</button>
                         </div>
                     </div>
                 </section>
