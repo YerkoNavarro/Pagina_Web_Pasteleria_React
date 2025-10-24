@@ -17,7 +17,11 @@ function Login(){
         }
         setErrors({})
         setLogin({ email, token: 'token-demo' })
-        setStatus(isLoggedIn() ? 'Sesión iniciada' : 'No se pudo iniciar sesión')
+        if(isLoggedIn()){
+            window.location.href = '/'
+            return
+        }
+        setStatus('No se pudo iniciar sesión')
     }
     return(
         <div className="d-flex flex-column min-vh-100">
