@@ -6,7 +6,7 @@ import SobreNosotros from './paginas/sobrenosotros'
 import Login from './paginas/login'
 import Register from './paginas/registro'
 import Usuario from './paginas/usuario'
-import Contacto from './paginas/contacto'
+
 import Carro from './paginas/carro'
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
       <Route path="/usuario" element={<Usuario />} />
-      <Route path="/contacto" element={<Contacto />} />
+      
       <Route path="/carro" element={<Carro />} />
     </Routes>
   )
