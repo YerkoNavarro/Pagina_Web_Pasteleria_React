@@ -1,7 +1,7 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState } from 'react'
-import { validateLoginInput, setLogin, isLoggedIn } from '../storage/gestionStorage'
+import { validateEmail, validatePassword, setLogin, isLoggedIn } from '../storage/gestionStorage'
 
 function Login(){
     const [email, setEmail] = useState('')
@@ -9,7 +9,7 @@ function Login(){
     const [errors, setErrors] = useState({})
     const [status, setStatus] = useState('')
     const handleLogin = () => {
-        const { valid, errors } = validateLoginInput({ email, password })
+        const { valid, errors } = validateEmail(email)
         if(!valid){
             setErrors(errors)
             setStatus('')

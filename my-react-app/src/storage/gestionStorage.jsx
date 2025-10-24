@@ -132,12 +132,33 @@ export function validateTelefono(telefono){
     return { valid: true, error: null };
 }
 
-export function validateLoginInput(input){
+export function validateRegistroInput(input){
     const errors = {};
+
+    // Validate nombre
+    const nombreRes = validateNombre(input && input.nombre);
+    if(!nombreRes.valid) errors.nombre = nombreRes.error;
+
+    // Validate email
     const emailRes = validateEmail(input && input.email);
     if(!emailRes.valid) errors.email = emailRes.error;
-    const passRes = validatePassword(input && input.password);
-    if(!passRes.valid) errors.password = passRes.error;
+
+    // Validate telefono
+    const telefonoRes = validateTelefono(input && input.telefono);
+    if(!telefonoRes.valid) errors.telefono = telefonoRes.error;
+
+    // Validate password
+    const passwordRes = validatePassword(input && input.password);
+    if(!passwordRes.valid) errors.password = passwordRes.error;
+
+    // Validate confirmPassword
+    const confirmarPassword = input && input.confirmarPassword;
+    if(!confirmarPassword) {
+        errors.confirmarPassword = 'Confirma tu contraseña';
+    } else if(input.password !== confirmarPassword) {
+        errors.confirmarPassword = 'Las contraseñas no coinciden';
+    }
+
     const valid = Object.keys(errors).length === 0;
     return { valid, errors };
 }
