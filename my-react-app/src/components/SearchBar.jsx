@@ -18,9 +18,6 @@ const SearchBar = ({ value, onChange }) => {
                         className="rounded-pill shadow-sm ps-4 py-2"
                         size="lg"
                     />
-                    <Button type="submit" variant="primary" className="rounded-pill px-4 shadow-sm" size="lg">
-                        Buscar
-                    </Button>
                 </div>
             </Form>
         </div>

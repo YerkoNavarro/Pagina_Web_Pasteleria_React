@@ -17,6 +17,8 @@ function sobreNosotros(){
                 <h1 className="display-4">Sobre Nosotros</h1>
             </div>
         </section>
+
+        <div className="my-5 mb-5" /> {/*espaciado adicional*/}
         <Container> 
         <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -39,9 +41,13 @@ function sobreNosotros(){
       </Accordion.Item>
     </Accordion>
     </Container>
+    <div className="my-5 mb-5" /> {/*espaciado adicional*/}
         <UnCarrusel imagen1={personal} imagen2={pasteleria} imagen3={exterior} descripcion1="Nuestro personal" descripcion2="Nuestro local" descripcion3="Nuestro local" />
 
-        
+        <div className="my-5 mb-5" /> {/*espaciado adicional*/}
+        <Container className="contacto-container">
+            <h4>Contactanos al numero: +56 9 1234 5678    Sucursal: Viña del Mar n° 24 7</h4>
+        </Container>
         <div className="my-5 mb-5" /> {/*espaciado adicional*/}
         <UnFooter/>
         </>

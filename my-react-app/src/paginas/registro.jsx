@@ -1,17 +1,20 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState } from 'react'
+import { validateRegistroInput, setLogin, isLoggedIn } from '../storage/gestionStorage'
 
 function Register(){
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
+    const [telefono, setTelefono] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [address, setAddress] = useState('')
     const [address2, setAddress2] = useState('')
     const [addressRef, setAddressRef] = useState('')
-    const [cardNumber, setCardNumber] = useState('')
-    const [cvv, setCvv] = useState('')
     const [profilePreview, setProfilePreview] = useState(null)
+    const [errors, setErrors] = useState({})
+    const [status, setStatus] = useState('')
 
     const handleImageChange = (e) => {
         const file = e.target.files && e.target.files[0]
@@ -19,6 +22,20 @@ function Register(){
         if (!file.type.startsWith('image/')) { setProfilePreview(null); return }
         const url = URL.createObjectURL(file)
         setProfilePreview(url)
+    }
+
+    const handleRegister = () => {
+        const { valid, errors } = validateRegistroInput({
+            nombre: fullName,
+            email,
+            telefono,
+            password,
+            confirmarPassword: confirmPassword,
+        })
+        if(!valid){ setErrors(errors); setStatus(''); return }
+        setErrors({})
+        setLogin({ email, token: 'token-demo' })
+        setStatus(isLoggedIn() ? 'Registro completado. Sesión iniciada.' : 'No se pudo iniciar sesión tras el registro')
     }
 
     return(
@@ -59,6 +76,9 @@ function Register(){
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="Ej: Juan Pérez"
                             />
+                            {errors.nombre && (
+                                <div className="text-danger small mt-1">{errors.nombre}</div>
+                            )}
                         </div>
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
                             <label className="form-label">Correo electrónico</label>
@@ -69,6 +89,22 @@ function Register(){
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="tucorreo@ejemplo.com"
                             />
+                            {errors.email && (
+                                <div className="text-danger small mt-1">{errors.email}</div>
+                            )}
+                        </div>
+                        <div className="bg-white rounded shadow-sm p-4 mb-3">
+                            <label className="form-label">Teléfono <span className="text-muted">(opcional)</span></label>
+                            <input
+                                type="tel"
+                                className="form-control"
+                                value={telefono}
+                                onChange={(e) => setTelefono(e.target.value)}
+                                placeholder="+56912345678"
+                            />
+                            {errors.telefono && (
+                                <div className="text-danger small mt-1">{errors.telefono}</div>
+                            )}
                         </div>
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
                             <label className="form-label">Contraseña</label>
@@ -79,6 +115,22 @@ function Register(){
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="********"
                             />
+                            {errors.password && (
+                                <div className="text-danger small mt-1">{errors.password}</div>
+                            )}
+                        </div>
+                        <div className="bg-white rounded shadow-sm p-4 mb-3">
+                            <label className="form-label">Confirmar contraseña</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="********"
+                            />
+                            {errors.confirmarPassword && (
+                                <div className="text-danger small mt-1">{errors.confirmarPassword}</div>
+                            )}
                         </div>
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
                             <label className="form-label">Dirección</label>
@@ -110,34 +162,11 @@ function Register(){
                                 placeholder="Cerca de..., entre calles..., portón negro (opcional)"
                             />
                         </div>
-                        <div className="bg-white rounded shadow-sm p-4">
-                            <div className="row g-3">
-                                <div className="col-12 col-md-8">
-                                    <label className="form-label">Número de tarjeta</label>
-                                    <input
-                                        type="text"
-                                        inputMode="numeric"
-                                        className="form-control"
-                                        value={cardNumber}
-                                        onChange={(e) => setCardNumber(e.target.value.replace(/[^0-9 ]/g, ''))}
-                                        placeholder="0000 0000 0000 0000"
-                                    />
-                                </div>
-                                <div className="col-12 col-md-4">
-                                    <label className="form-label">CVV</label>
-                                    <input
-                                        type="password"
-                                        inputMode="numeric"
-                                        className="form-control"
-                                        value={cvv}
-                                        onChange={(e) => setCvv(e.target.value.replace(/[^0-9]/g, '').slice(0,4))}
-                                        placeholder="***"
-                                    />
-                                </div>
-                            </div>
-                        </div>
                         <div className="mt-3 d-grid">
-                            <button type="button" className="btn btn-success">Registrarse</button>
+                            {status && (
+                                <div className="alert alert-info py-2 mb-2" role="status">{status}</div>
+                            )}
+                            <button type="button" className="btn btn-success" onClick={handleRegister}>Registrarse</button>
                         </div>
                     </div>
                 </div>
