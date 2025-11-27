@@ -1,7 +1,9 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { validateRegistroInput, setLogin, isLoggedIn } from '../storage/gestionStorage'
+import { Modal, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 function Register(){
     const [fullName, setFullName] = useState('')
@@ -15,6 +17,17 @@ function Register(){
     const [profilePreview, setProfilePreview] = useState(null)
     const [errors, setErrors] = useState({})
     const [status, setStatus] = useState('')
+    const [showSuccessModal, setShowSuccessModal] = useState(false)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (showSuccessModal) {
+            const timer = setTimeout(() => {
+                navigate('/login');
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [showSuccessModal, navigate]);
 
     const handleImageChange = (e) => {
         const file = e.target.files && e.target.files[0]
@@ -33,9 +46,13 @@ function Register(){
             confirmarPassword: confirmPassword,
         })
         if(!valid){ setErrors(errors); setStatus(''); return }
-        setErrors({})
-        setLogin({ email, token: 'token-demo' })
-        setStatus(isLoggedIn() ? 'Registro completado. Sesión iniciada.' : 'No se pudo iniciar sesión tras el registro')
+        try {
+            setLogin({ email, token: 'token-demo' });
+            setShowSuccessModal(true);
+            setErrors({});
+        } catch (error) {
+            setStatus('Ocurrió un error al registrar el usuario');
+        }
     }
 
     return(
@@ -173,6 +190,21 @@ function Register(){
             </div>
         </section>
         <UnFooter/>
+
+
+        <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>¡Registro exitoso!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <p>Tu cuenta ha sido creada exitosamente. Serás redirigido a la página de inicio de sesión en unos segundos...</p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" onClick={() => navigate('/login')}>
+                    Ir a Iniciar Sesión
+                </Button>
+            </Modal.Footer>
+        </Modal>
         </>
     );
 }

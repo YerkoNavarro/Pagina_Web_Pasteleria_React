@@ -17,19 +17,19 @@ function isLoginValido(login){
 }
 
 export function añadirAlCarro(producto){
-
     try {
-
         const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
-        if(!Array.isArray(carritoActual)) return;
-        if(!isProductoValido(producto)) return;
+        if(!Array.isArray(carritoActual)) return false;
+        if(!isProductoValido(producto)) return false;
+        
         carritoActual.push(producto);
         localStorage.setItem('carrito', JSON.stringify(carritoActual));
         console.log("Producto agregado al carrito");
+        return true;
     } catch (error) {
-        console.log(error);
+        console.error("Error al agregar al carrito:", error);
+        return false;
     }
-    
 }
 
 export function obtenerCarrito(){
@@ -64,12 +64,18 @@ export function vaciarCarrito(){
     }
 }
 
+const ADMIN_EMAILS = ['admin@pasteleria.com'];
+
 export function setLogin(data){
     try {
         if(!isLoginValido(data)) return;
-        localStorage.setItem('login', JSON.stringify(data));
+        const userData = {
+            ...data,
+            isAdmin: ADMIN_EMAILS.includes(data.email.toLowerCase())
+        };
+        localStorage.setItem('login', JSON.stringify(userData));
     } catch (error) {
-        console.log(error);
+        console.error('Error en setLogin:', error);
     }
 }
 
@@ -88,7 +94,17 @@ export function isLoggedIn(){
         const data = JSON.parse(localStorage.getItem('login'));
         return isLoginValido(data);
     } catch (error) {
-        console.log(error);
+        console.error('Error en isLoggedIn:', error);
+        return false;
+    }
+}
+
+export function isAdmin() {
+    try {
+        const data = JSON.parse(localStorage.getItem('login'));
+        return isLoginValido(data) && data.isAdmin === true;
+    } catch (error) {
+        console.error('Error en isAdmin:', error);
         return false;
     }
 }
@@ -135,23 +151,21 @@ export function validateTelefono(telefono){
 export function validateRegistroInput(input){
     const errors = {};
 
-    // Validate nombre
     const nombreRes = validateNombre(input && input.nombre);
     if(!nombreRes.valid) errors.nombre = nombreRes.error;
 
-    // Validate email
+
     const emailRes = validateEmail(input && input.email);
     if(!emailRes.valid) errors.email = emailRes.error;
 
-    // Validate telefono
+
     const telefonoRes = validateTelefono(input && input.telefono);
     if(!telefonoRes.valid) errors.telefono = telefonoRes.error;
 
-    // Validate password
     const passwordRes = validatePassword(input && input.password);
     if(!passwordRes.valid) errors.password = passwordRes.error;
 
-    // Validate confirmPassword
+
     const confirmarPassword = input && input.confirmarPassword;
     if(!confirmarPassword) {
         errors.confirmarPassword = 'Confirma tu contraseña';
@@ -161,4 +175,60 @@ export function validateRegistroInput(input){
 
     const valid = Object.keys(errors).length === 0;
     return { valid, errors };
+}
+
+export function agregarProducto(producto) {
+    try {
+        if (!isProductoValido(producto)) {
+            throw new Error('Producto inválido');
+        }
+        const productos = obtenerProductos();
+        // Verificar si el producto ya existe
+        if (productos.some(p => p.Nombre.toLowerCase() === producto.Nombre.toLowerCase())) {
+            throw new Error('Ya existe un producto con ese nombre');
+        }
+        productos.push(producto);
+        localStorage.setItem('productos', JSON.stringify(productos));
+        return { success: true };
+    } catch (error) {
+        console.error('Error al agregar producto:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export function obtenerProductos() {
+    try {
+        const productos = JSON.parse(localStorage.getItem('productos')) || [];
+        return Array.isArray(productos) ? productos : [];
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        return [];
+    }
+}
+
+export function actualizarProducto(nombre, datosActualizados) {
+    try {
+        const productos = obtenerProductos();
+        const indice = productos.findIndex(p => p.Nombre === nombre);
+        if (indice === -1) {
+            throw new Error('Producto no encontrado');
+        }
+        productos[indice] = { ...productos[indice], ...datosActualizados };
+        localStorage.setItem('productos', JSON.stringify(productos));
+        return { success: true };
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export function eliminarProducto(nombre) {
+    try {
+        const productos = obtenerProductos().filter(p => p.Nombre !== nombre);
+        localStorage.setItem('productos', JSON.stringify(productos));
+        return { success: true };
+    } catch (error) {
+        console.error('Error al eliminar producto:', error);
+        return { success: false, error: error.message };
+    }
 }

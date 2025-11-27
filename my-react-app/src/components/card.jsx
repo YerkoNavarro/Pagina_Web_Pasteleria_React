@@ -1,22 +1,22 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-function ProductCard({ Nombre, Descripcion, Precio, Imagen, onAgregar, productoData }) {
+function ProductCard({ nombre, descripcion, precio, imagen, onAgregar, productoData }) {
     const handleAgregarClick = () => {
         onAgregar(productoData); 
     };
     
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={Imagen}/>
+      <Card.Img variant="top" src={imagen} />
 
       <Card.Body>
-        <Card.Title>{Nombre}</Card.Title>
+        <Card.Title>{nombre}</Card.Title>
         <Card.Text>
-          {Precio}
+          {precio}
         </Card.Text>
         <Card.Text>
-          {Descripcion}
+          {descripcion}
         </Card.Text>
         
     <button className="btn btn-primary" onClick={handleAgregarClick}>

@@ -10,58 +10,34 @@ import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
 import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
 import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 import SearchBar from '../components/SearchBar'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { añadirAlCarro } from '../storage/gestionStorage'
 
 import Container from 'react-bootstrap/Container'
-function Productos() {
-    const [term, setTerm] = useState('')
-    const productos = [
-        {
-            Nombre: 'Pastel de Chocolate',
-            Descripcion: 'Pastel de chocolate con un toque de vainilla',
-            Precio: '1000',
-            Imagen: imagenPastel
-        },
-        
-        {
-            Nombre: 'Pie de Limón',
-            Descripcion: 'Relleno cítrico con merengue italiano tostado',
-            Precio: '900',
-            Imagen: imagenPieLimon
-        },
-        
-        {
-            Nombre: 'Cafe Capuccino',
-            Descripcion: 'Cafe capuccino con leche',
-            Precio: '800',
-            Imagen: imagenCafe
-        },
-        {
-            Nombre: 'Alfajor Artesanal',
-            Descripcion: 'Doble capa de galleta y dulce de leche cubierto en chocolate',
-            Precio: '700',
-            Imagen: imagenAlfajor
-        },
-        
-        {
-            Nombre: 'Sandwich',
-            Descripcion: 'Sandwich de jamón y queso',
-            Precio: '950',
-            Imagen: imagenSandwich
-        },
-        
-    ]
+import ProductoService from '../services/productoServices'
 
-    const filtrados = useMemo(() => {
-        const t = term.trim().toLowerCase()
-        if (!t) return productos
-        return productos.filter(p =>
-            p.Nombre.toLowerCase().includes(t) ||
-            p.Descripcion.toLowerCase().includes(t)
-        )
-    }, [term, productos])
+function Productos() {
+    const productoService = new ProductoService()
+    const [productos, setProductos] = useState([])
+
+   
+    
+
+    useEffect(() => {
+        const fetchProductos = async () => {
+            try {
+                const response = await productoService.getAllProductos();
+                setProductos(response.data);
+            } catch (error) {
+                console.error('Error al obtener productos:', error);
+            }
+        };
+        fetchProductos();
+    }, [])
+
+
+   
 
     return (
         <>
@@ -74,21 +50,21 @@ function Productos() {
             </section>
             <Container>
             <div className="mb-4">
-                <SearchBar value={term} onChange={setTerm} />
+               
             </div>
             <Row className="g-4 justify-content-center">
-            {filtrados.map(producto => (
+            {Array.isArray(productos) && productos.map(producto => (
 
                
 
-                <Col key={producto.Nombre} xs={12} sm={6} md={4} lg={3}>
+                <Col key={producto.id} xs={12} sm={6} md={4} lg={3}>
                     
                     
                     <ProductCard
-                        Nombre={producto.Nombre}
-                        Descripcion={producto.Descripcion}
-                        Precio={producto.Precio}
-                        Imagen={producto.Imagen}
+                        nombre={producto.nombre}
+                        descripcion={producto.descripcion}
+                        precio={producto.precio}
+                        imagen={producto.imagen}
                         onAgregar={añadirAlCarro}
                         productoData={producto}/>
                         

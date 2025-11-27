@@ -6,6 +6,8 @@ import imagenTortaGuiness from '../imagenes/Generated Image October 15, 2025 - 1
 import imagenPasteles from '../imagenes/Generated Image October 15, 2025 - 10_18PM.png'
 import imagenPastel from '../imagenes/Generated Image October 15, 2025 - 10_19PM.png'
 import CommentSection from '../components/CommentSection'
+
+import { Link } from 'react-router-dom'
 function Inicio() {
   return (
     <>
@@ -16,7 +18,7 @@ function Inicio() {
         <div className="big-title">
           <h1 className="display-4">¡50 Años Endulzando Chile!</h1>
           <p className="lead">Participamos en el récord Guinness de la torta más grande del mundo 🎂</p>
-          <a className="button-explorar-productos" href="/productos" role="button">Explorar Productos</a> {/* enlace a la página de productos */}
+          <Link to="/productos" className="button-explorar-productos" role="button">Explorar Productos</Link>
         </div>
       </section>
       <div className="my-5" /> 
