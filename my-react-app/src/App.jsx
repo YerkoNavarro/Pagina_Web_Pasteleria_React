@@ -8,6 +8,7 @@ import Register from './paginas/registro'
 import Usuario from './paginas/usuario'
 
 import Carro from './paginas/carro'
+import Admin from './paginas/admin'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/usuario" element={<Usuario />} />
       
       <Route path="/carro" element={<Carro />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   )
 }
