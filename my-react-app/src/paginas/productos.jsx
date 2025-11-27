@@ -11,6 +11,7 @@ import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
 import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 import SearchBar from '../components/SearchBar'
 import { useMemo, useState, useEffect } from 'react'
+import { Modal, Button } from 'react-bootstrap'
 
 import { añadirAlCarro, obtenerProductos } from '../storage/gestionStorage'
 
@@ -18,6 +19,8 @@ import Container from 'react-bootstrap/Container'
 function Productos() {
     const [term, setTerm] = useState('')
     const [productos, setProductos] = useState(obtenerProductos())
+    const [showCartModal, setShowCartModal] = useState(false)
+    const [lastAddedProduct, setLastAddedProduct] = useState(null)
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -50,6 +53,22 @@ function Productos() {
             <div className="my-5" /> 
             </section>
             <Container className="mb-5 pb-4">
+                <Modal show={showCartModal} onHide={() => setShowCartModal(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Producto agregado al carrito</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>¡{lastAddedProduct?.Nombre} ha sido agregado a tu carrito!</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowCartModal(false)}>
+                            Seguir comprando
+                        </Button>
+                        <Button variant="primary" onClick={() => navigate('/carro')}>
+                            Ir al carrito
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             <div className="mb-4">
                 <SearchBar value={term} onChange={setTerm} />
             </div>
