@@ -10,49 +10,26 @@ import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
 import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
 import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 import SearchBar from '../components/SearchBar'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 
-import { añadirAlCarro } from '../storage/gestionStorage'
+import { añadirAlCarro, obtenerProductos } from '../storage/gestionStorage'
 
 import Container from 'react-bootstrap/Container'
 function Productos() {
     const [term, setTerm] = useState('')
-    const productos = [
-        {
-            Nombre: 'Pastel de Chocolate',
-            Descripcion: 'Pastel de chocolate con un toque de vainilla',
-            Precio: '1000',
-            Imagen: imagenPastel
-        },
+    const [productos, setProductos] = useState(obtenerProductos())
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setProductos(obtenerProductos())
+        }
         
-        {
-            Nombre: 'Pie de Limón',
-            Descripcion: 'Relleno cítrico con merengue italiano tostado',
-            Precio: '900',
-            Imagen: imagenPieLimon
-        },
+        window.addEventListener('storage', handleStorageChange)
         
-        {
-            Nombre: 'Cafe Capuccino',
-            Descripcion: 'Cafe capuccino con leche',
-            Precio: '800',
-            Imagen: imagenCafe
-        },
-        {
-            Nombre: 'Alfajor Artesanal',
-            Descripcion: 'Doble capa de galleta y dulce de leche cubierto en chocolate',
-            Precio: '700',
-            Imagen: imagenAlfajor
-        },
-        
-        {
-            Nombre: 'Sandwich',
-            Descripcion: 'Sandwich de jamón y queso',
-            Precio: '950',
-            Imagen: imagenSandwich
-        },
-        
-    ]
+        return () => {
+            window.removeEventListener('storage', handleStorageChange)
+        }
+    }, [])
 
     const filtrados = useMemo(() => {
         const t = term.trim().toLowerCase()
