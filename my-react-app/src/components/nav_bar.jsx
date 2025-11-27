@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { isAdmin, isLoggedIn } from '../storage/gestionStorage';
+import { isAdmin, isLoggedIn, logout } from '../storage/gestionStorage';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -36,7 +36,21 @@ function NavBar() {
                 <Nav.Link as={Link} to="/registro">Registrarse</Nav.Link>
               </>
             ) : (
-              <Nav.Link as={Link} to="/usuario">Mi Cuenta</Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/usuario">Mi Cuenta</Nav.Link>
+                <Nav.Link 
+                  as="button" 
+                  className="btn btn-link nav-link" 
+                  onClick={() => {
+                    if (window.confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                      logout();
+                      window.location.href = '/';
+                    }
+                  }}
+                >
+                  Cerrar Sesión
+                </Nav.Link>
+              </>
             )}
           </Nav>
           
