@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Alert, Form, Table, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { getLogin, isLoggedIn, logout, agregarProducto, obtenerProductos, actualizarProducto, eliminarProducto } from '../storage/gestionStorage';
+import { getLogin, isLoggedIn, isAdmin, logout, agregarProducto, obtenerProductos, actualizarProducto, eliminarProducto } from '../storage/gestionStorage';
 
 const Admin = () => {
     const navigate = useNavigate();
@@ -24,6 +24,13 @@ const Admin = () => {
             navigate('/login');
             return;
         }
+        
+        if (!isAdmin()) {
+            setStatus({ type: 'danger', message: 'No tienes permisos de administrador' });
+            setTimeout(() => navigate('/'), 2000);
+            return;
+        }
+        
         cargarProductos();
     }, [navigate]);
 

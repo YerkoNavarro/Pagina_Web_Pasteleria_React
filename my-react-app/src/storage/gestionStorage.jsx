@@ -64,12 +64,18 @@ export function vaciarCarrito(){
     }
 }
 
+const ADMIN_EMAILS = ['admin@pasteleria.com'];
+
 export function setLogin(data){
     try {
         if(!isLoginValido(data)) return;
-        localStorage.setItem('login', JSON.stringify(data));
+        const userData = {
+            ...data,
+            isAdmin: ADMIN_EMAILS.includes(data.email.toLowerCase())
+        };
+        localStorage.setItem('login', JSON.stringify(userData));
     } catch (error) {
-        console.log(error);
+        console.error('Error en setLogin:', error);
     }
 }
 
@@ -88,7 +94,17 @@ export function isLoggedIn(){
         const data = JSON.parse(localStorage.getItem('login'));
         return isLoginValido(data);
     } catch (error) {
-        console.log(error);
+        console.error('Error en isLoggedIn:', error);
+        return false;
+    }
+}
+
+export function isAdmin() {
+    try {
+        const data = JSON.parse(localStorage.getItem('login'));
+        return isLoginValido(data) && data.isAdmin === true;
+    } catch (error) {
+        console.error('Error en isAdmin:', error);
         return false;
     }
 }
