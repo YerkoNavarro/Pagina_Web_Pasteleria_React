@@ -135,6 +135,9 @@ const Admin = () => {
                     <p>Bienvenido, {login?.email || 'Administrador'}</p>
                 </Col>
                 <Col className="text-end">
+                    <Button variant="outline-secondary" onClick={() => navigate('/productos')} className="me-2">
+                        Volver a Tienda
+                    </Button>
                     <Button variant="primary" onClick={handleNuevoProducto} className="me-2">
                         Nuevo Producto
                     </Button>
