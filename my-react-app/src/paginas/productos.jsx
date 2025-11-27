@@ -4,15 +4,10 @@ import UnFooter from '../components/C_footer'
 import ProductCard from '../components/card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import imagenAlfajor from '../imagenes/Gemini_Generated_Image_alfajor.png'
-import imagenPastel from '../imagenes/Gemini_Generated_Image_pastel.png'
-import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
-import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
-import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 import SearchBar from '../components/SearchBar'
 import { useEffect, useMemo, useState } from 'react'
 
-import { añadirAlCarro } from '../storage/gestionStorage'
+import { añadirAlCarro, obtenerProductos } from '../storage/gestionStorage'
 
 import Container from 'react-bootstrap/Container'
 import ProductoService from '../services/productoServices'
@@ -48,7 +43,23 @@ function Productos() {
                 </div>
             <div className="my-5" /> 
             </section>
-            <Container>
+            <Container className="mb-5 pb-4">
+                <Modal show={showCartModal} onHide={() => setShowCartModal(false)} centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Producto agregado al carrito</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>¡{lastAddedProduct?.Nombre} ha sido agregado a tu carrito!</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowCartModal(false)}>
+                            Seguir comprando
+                        </Button>
+                        <Button variant="primary" onClick={() => navigate('/carro')}>
+                            Ir al carrito
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             <div className="mb-4">
                
             </div>
