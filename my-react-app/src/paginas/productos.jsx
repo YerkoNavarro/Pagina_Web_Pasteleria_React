@@ -49,7 +49,7 @@ function Productos() {
                 </div>
             <div className="my-5" /> 
             </section>
-            <Container>
+            <Container className="mb-5 pb-4">
             <div className="mb-4">
                 <SearchBar value={term} onChange={setTerm} />
             </div>
