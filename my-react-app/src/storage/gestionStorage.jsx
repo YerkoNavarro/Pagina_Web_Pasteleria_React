@@ -17,19 +17,19 @@ function isLoginValido(login){
 }
 
 export function añadirAlCarro(producto){
-
     try {
-
         const carritoActual = JSON.parse(localStorage.getItem('carrito')) || [];
-        if(!Array.isArray(carritoActual)) return;
-        if(!isProductoValido(producto)) return;
+        if(!Array.isArray(carritoActual)) return false;
+        if(!isProductoValido(producto)) return false;
+        
         carritoActual.push(producto);
         localStorage.setItem('carrito', JSON.stringify(carritoActual));
         console.log("Producto agregado al carrito");
+        return true;
     } catch (error) {
-        console.log(error);
+        console.error("Error al agregar al carrito:", error);
+        return false;
     }
-    
 }
 
 export function obtenerCarrito(){
@@ -151,23 +151,21 @@ export function validateTelefono(telefono){
 export function validateRegistroInput(input){
     const errors = {};
 
-    // Validate nombre
     const nombreRes = validateNombre(input && input.nombre);
     if(!nombreRes.valid) errors.nombre = nombreRes.error;
 
-    // Validate email
+
     const emailRes = validateEmail(input && input.email);
     if(!emailRes.valid) errors.email = emailRes.error;
 
-    // Validate telefono
+
     const telefonoRes = validateTelefono(input && input.telefono);
     if(!telefonoRes.valid) errors.telefono = telefonoRes.error;
 
-    // Validate password
     const passwordRes = validatePassword(input && input.password);
     if(!passwordRes.valid) errors.password = passwordRes.error;
 
-    // Validate confirmPassword
+
     const confirmarPassword = input && input.confirmarPassword;
     if(!confirmarPassword) {
         errors.confirmarPassword = 'Confirma tu contraseña';

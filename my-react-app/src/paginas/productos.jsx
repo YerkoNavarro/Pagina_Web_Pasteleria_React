@@ -4,13 +4,9 @@ import UnFooter from '../components/C_footer'
 import ProductCard from '../components/card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import imagenAlfajor from '../imagenes/Gemini_Generated_Image_alfajor.png'
-import imagenPastel from '../imagenes/Gemini_Generated_Image_pastel.png'
-import imagenPieLimon from '../imagenes/Gemini_Generated_Image_pie_limon.png'
-import imagenCafe from '../imagenes/Gemini_Generated_Image_z5gheyz5gheyz5gh.png'
-import imagenSandwich from '../imagenes/Gemini_Generated_Image_i37ja2i37ja2i37j.png'
 import SearchBar from '../components/SearchBar'
 import { useMemo, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Modal, Button } from 'react-bootstrap'
 
 import { añadirAlCarro, obtenerProductos } from '../storage/gestionStorage'
@@ -21,6 +17,7 @@ function Productos() {
     const [productos, setProductos] = useState(obtenerProductos())
     const [showCartModal, setShowCartModal] = useState(false)
     const [lastAddedProduct, setLastAddedProduct] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -85,7 +82,13 @@ function Productos() {
                         Descripcion={producto.Descripcion}
                         Precio={producto.Precio}
                         Imagen={producto.Imagen}
-                        onAgregar={añadirAlCarro}
+                        onAgregar={(producto) => {
+                            const success = añadirAlCarro(producto);
+                            if (success) {
+                                setLastAddedProduct(producto);
+                                setShowCartModal(true);
+                            }
+                        }}
                         productoData={producto}/>
                         
 
