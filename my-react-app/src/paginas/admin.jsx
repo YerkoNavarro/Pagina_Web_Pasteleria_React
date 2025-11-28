@@ -1,24 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Alert, Form, Table, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { getLogin, isLoggedIn, isAdmin, logout, agregarProducto, obtenerProductos, actualizarProducto, eliminarProducto } from '../storage/gestionStorage';
+import { getLogin, isLoggedIn, isAdmin, logout} from '../storage/gestionStorage';
+
+
+import { agregarProducto,actualizarProducto,eliminarProducto,fetchProductos} from '../storage/apiStorage';
 
 const Admin = () => {
     const navigate = useNavigate();
     const [login] = useState(getLogin());
-    const [productos, setProductos] = useState([]);
+    const [productos, setProductos] = useState([]); //una lista de los productos de la api
     const [errors, setErrors] = useState({});
     const [status, setStatus] = useState({ type: '', message: '' });
     const [showModal, setShowModal] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
     
     const [productoForm, setProductoForm] = useState({
-        Nombre: '',
-        Descripcion: '',
-        Precio: '',
-        Imagen: ''
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        imagen: ''
     });
 
+   
     useEffect(() => {
         if (!isLoggedIn()) {
             navigate('/login');
@@ -31,13 +35,22 @@ const Admin = () => {
             return;
         }
         
-        cargarProductos();
+        
     }, [navigate]);
 
-    const cargarProductos = () => {
-        const productosGuardados = obtenerProductos();
-        setProductos(productosGuardados);
-    };
+    useEffect(() => {
+        (async () => {
+            const respuesta = await fetchProductos();
+            if (respuesta.success) {
+                setProductos(respuesta.data);
+            } else {
+                setStatus({ type: 'danger', message: respuesta.error || 'Error al cargar los productos' });
+            }
+        })()
+    }, [])
+        
+        
+   
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -49,40 +62,43 @@ const Admin = () => {
 
     const validarProducto = () => {
         const newErrors = {};
-        if (!productoForm.Nombre.trim()) newErrors.Nombre = 'El nombre es requerido';
-        if (!productoForm.Descripcion.trim()) newErrors.Descripcion = 'La descripción es requerida';
-        if (!productoForm.Precio || isNaN(Number(productoForm.Precio)) || Number(productoForm.Precio) <= 0) {
-            newErrors.Precio = 'Precio inválido';
+        if (!productoForm.nombre.trim()) newErrors.nombre = 'El nombre es requerido';
+        if (!productoForm.descripcion.trim()) newErrors.descripcion = 'La descripción es requerida';
+        if (!productoForm.precio || isNaN(Number(productoForm.precio)) || Number(productoForm.precio) <= 0) {
+            newErrors.precio = 'Precio inválido';
         }
-        if (!productoForm.Imagen.trim()) newErrors.Imagen = 'La URL de la imagen es requerida';
+        if (!productoForm.imagen.trim()) newErrors.imagen = 'La URL de la imagen es requerida';
         
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validarProducto()) return;
 
         const producto = {
             ...productoForm,
-            Precio: String(Number(productoForm.Precio)) // Asegurar que el precio sea un string numérico
+            precio: Number(productoForm.precio)
         };
 
         try {
             let resultado;
             if (editingProduct) {
-                resultado = actualizarProducto(editingProduct.Nombre, producto);
+                resultado = await actualizarProducto({ ...producto, id: editingProduct.id });
             } else {
-                resultado = agregarProducto(producto);
+                resultado = await agregarProducto(producto);
             }
 
             if (resultado.success) {
                 setStatus({ type: 'success', message: `Producto ${editingProduct ? 'actualizado' : 'agregado'} correctamente` });
                 setShowModal(false);
-                setProductoForm({ Nombre: '', Descripcion: '', Precio: '', Imagen: '' });
+                setProductoForm({ nombre: '', descripcion: '', precio: '', imagen: '' });
                 setEditingProduct(null);
-                cargarProductos();
+                const data = await fetchProductos();
+                if (data.success) {
+                    setProductos(data.data || []);
+                }
             } else {
                 throw new Error(resultado.error || 'Error al guardar el producto');
             }
@@ -93,29 +109,36 @@ const Admin = () => {
 
     const handleEditarProducto = (producto) => {
         setProductoForm({
-            Nombre: producto.Nombre,
-            Descripcion: producto.Descripcion || '',
-            Precio: producto.Precio || '',
-            Imagen: producto.Imagen || ''
+            nombre: producto.nombre,
+            descripcion: producto.descripcion || '',
+            precio: producto.precio || '',
+            imagen: producto.imagen || ''
         });
         setEditingProduct(producto);
         setShowModal(true);
     };
 
-    const handleEliminarProducto = (nombre) => {
+    const handleEliminarProducto = async (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            const resultado = eliminarProducto(nombre);
-            if (resultado.success) {
-                setStatus({ type: 'success', message: 'Producto eliminado correctamente' });
-                cargarProductos();
-            } else {
-                setStatus({ type: 'danger', message: resultado.error || 'Error al eliminar el producto' });
+            try {
+                const resultado = await eliminarProducto(id);
+                if (resultado.success) {
+                    setStatus({ type: 'success', message: 'Producto eliminado correctamente' });
+                    const data = await fetchProductos();
+                    if (data.success) {
+                        setProductos(data.data || []);
+                    }
+                } else {
+                    throw new Error(resultado.error || 'Error al eliminar el producto');
+                }
+            } catch (error) {
+                setStatus({ type: 'danger', message: error.message });
             }
         }
     };
 
     const handleNuevoProducto = () => {
-        setProductoForm({ Nombre: '', Descripcion: '', Precio: '', Imagen: '' });
+        setProductoForm({ nombre: '', descripcion: '', precio: '', imagen: '' });
         setEditingProduct(null);
         setErrors({});
         setStatus({ type: '', message: '' });
@@ -173,18 +196,18 @@ const Admin = () => {
                                 {productos.map((producto, index) => (
                                     <tr key={index}>
                                         <td className="align-middle" style={{ width: '100px' }}>
-                                            {producto.Imagen && (
+                                            {producto.imagen && (
                                                 <img 
-                                                    src={producto.Imagen} 
-                                                    alt={producto.Nombre} 
+                                                    src={producto.imagen} 
+                                                    alt={producto.nombre} 
                                                     className="img-thumbnail" 
                                                     style={{ maxWidth: '80px', height: 'auto' }}
                                                 />
                                             )}
                                         </td>
-                                        <td className="align-middle">{producto.Nombre}</td>
-                                        <td className="align-middle">{producto.Descripcion}</td>
-                                        <td className="align-middle">${Number(producto.Precio).toLocaleString()}</td>
+                                        <td className="align-middle">{producto.nombre}</td>
+                                        <td className="align-middle">{producto.descripcion}</td>
+                                        <td className="align-middle">${Number(producto.precio).toLocaleString()}</td>
                                         <td className="align-middle" style={{ width: '150px' }}>
                                             <Button 
                                                 variant="outline-primary" 
@@ -197,7 +220,7 @@ const Admin = () => {
                                             <Button 
                                                 variant="outline-danger" 
                                                 size="sm"
-                                                onClick={() => handleEliminarProducto(producto.Nombre)}
+                                                onClick={() => handleEliminarProducto(producto.id)}
                                             >
                                                 Eliminar
                                             </Button>
@@ -220,13 +243,13 @@ const Admin = () => {
                             <Form.Label>Nombre del Producto *</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="Nombre"
-                                value={productoForm.Nombre}
+                                name="nombre"
+                                value={productoForm.nombre}
                                 onChange={handleInputChange}
-                                isInvalid={!!errors.Nombre}
+                                isInvalid={!!errors.nombre}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.Nombre}
+                                {errors.nombre}
                             </Form.Control.Feedback>
                         </Form.Group>
 
@@ -235,13 +258,13 @@ const Admin = () => {
                             <Form.Control
                                 as="textarea"
                                 rows={3}
-                                name="Descripcion"
-                                value={productoForm.Descripcion}
+                                name="descripcion"
+                                value={productoForm.descripcion}
                                 onChange={handleInputChange}
-                                isInvalid={!!errors.Descripcion}
+                                isInvalid={!!errors.descripcion}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.Descripcion}
+                                {errors.descripcion}
                             </Form.Control.Feedback>
                         </Form.Group>
 
@@ -251,34 +274,34 @@ const Admin = () => {
                                 type="number"
                                 min="0"
                                 step="0.01"
-                                name="Precio"
-                                value={productoForm.Precio}
+                                name="precio"
+                                value={productoForm.precio}
                                 onChange={handleInputChange}
-                                isInvalid={!!errors.Precio}
+                                isInvalid={!!errors.precio}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.Precio}
+                                {errors.precio}
                             </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mb-3">
                             <Form.Label>URL de la Imagen *</Form.Label>
                             <Form.Control
-                                type="url"
-                                name="Imagen"
-                                value={productoForm.Imagen}
+                                type="text"
+                                name="imagen"
+                                value={productoForm.imagen}
                                 onChange={handleInputChange}
-                                isInvalid={!!errors.Imagen}
+                                isInvalid={!!errors.imagen}
                                 placeholder="https://ejemplo.com/imagen.jpg"
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.Imagen}
+                                {errors.imagen}
                             </Form.Control.Feedback>
-                            {productoForm.Imagen && (
+                            {productoForm.imagen && (
                                 <div className="mt-2">
                                     <p className="mb-1">Vista previa:</p>
                                     <img 
-                                        src={productoForm.Imagen} 
+                                        src={productoForm.imagen} 
                                         alt="Vista previa" 
                                         className="img-thumbnail" 
                                         style={{ maxWidth: '100px', height: 'auto' }}

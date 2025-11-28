@@ -17,23 +17,29 @@ import { añadirAlCarro } from '../storage/gestionStorage'
 import Container from 'react-bootstrap/Container'
 import ProductoService from '../services/productoServices'
 
+import { fetchProductos } from '../storage/apiStorage'
 function Productos() {
     const productoService = new ProductoService()
     const [productos, setProductos] = useState([])
 
-   
-    
+    const handleAgregarAlCarro = (producto) => {
+        const resultado = añadirAlCarro(producto);
+        if (resultado) {
+            console.log('Producto agregado al carrito:', producto);
+        } else {
+            console.error('Error al agregar el producto');
+        }
+    };
 
     useEffect(() => {
-        const fetchProductos = async () => {
-            try {
-                const response = await productoService.getAllProductos();
-                setProductos(response.data);
-            } catch (error) {
-                console.error('Error al obtener productos:', error);
+        (async () => {
+            const respuesta = await fetchProductos();
+            if (respuesta.success) {
+                setProductos(respuesta.data);
+            } else {
+                console.error('Error al cargar los productos:', respuesta.error);
             }
-        };
-        fetchProductos();
+        })()
     }, [])
 
 
@@ -65,7 +71,7 @@ function Productos() {
                         descripcion={producto.descripcion}
                         precio={producto.precio}
                         imagen={producto.imagen}
-                        onAgregar={añadirAlCarro}
+                        onAgregar={handleAgregarAlCarro}
                         productoData={producto}/>
                         
 

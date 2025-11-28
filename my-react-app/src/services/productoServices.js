@@ -25,25 +25,25 @@ export default class ProductoService  {
 
 
     async getProductoById(id) {
-        const response = await axios.get(`${API}/${id}`);
-        return response.producto;
+        const response =  await axios.get(`${API}${id}`);
+        return response;
     }
 
    
     async createProducto(producto) {
-        const response = await axios.post(API, producto);
-        return response.producto;
+        const response =  await axios.post(API, producto);
+        return response;
     }
 
     
     async updateProducto(producto) {
-        const response = await axios.put(`${API}/${producto.id}`, producto);
-        return response.producto;
+        const response =  await axios.put(`${API}${producto.id}`, producto);
+        return response;
     }
 
    
     async deleteProducto(id) {
-        const response = await axios.delete(`${API}/${id}`);
-        return response.producto;
+        const response =  await axios.delete(`${API}${id}`);
+        return response;
     }
 }
