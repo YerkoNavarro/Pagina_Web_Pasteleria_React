@@ -46,8 +46,8 @@ function Carrito() {
                                     <tbody>
                                         {listaDelCarrito.map((producto, index) => (
                                             <tr key={index}>
-                                                <td>{producto.Nombre}</td>
-                                                <td>${producto.Precio}</td>
+                                                <td>{producto.nombre}</td>
+                                                <td>${producto.precio}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -65,10 +65,12 @@ function Carrito() {
                                 <h5 className="card-title">Resumen</h5>
                                 <p className="card-text">Total de la compra</p>
                                 <table className="table">
-                                    <tr>
-                                        <td><strong>Total:</strong></td>
-                                        <td><strong>${precioTotal}</strong></td>
-                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Total:</strong></td>
+                                            <td><strong>${precioTotal}</strong></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
