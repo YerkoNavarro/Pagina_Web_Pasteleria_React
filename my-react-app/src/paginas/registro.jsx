@@ -1,20 +1,18 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState, useEffect } from 'react'
-import { validateRegistroInput, setLogin, isLoggedIn } from '../storage/gestionStorage'
+import { authService } from '../services/authService'
 import { Modal, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 function Register(){
+    const [username, setUsername] = useState('')
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [telefono, setTelefono] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [address, setAddress] = useState('')
-    const [address2, setAddress2] = useState('')
-    const [addressRef, setAddressRef] = useState('')
-    const [profilePreview, setProfilePreview] = useState(null)
     const [errors, setErrors] = useState({})
     const [status, setStatus] = useState('')
     const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -29,29 +27,43 @@ function Register(){
         }
     }, [showSuccessModal, navigate]);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files && e.target.files[0]
-        if (!file) { setProfilePreview(null); return }
-        if (!file.type.startsWith('image/')) { setProfilePreview(null); return }
-        const url = URL.createObjectURL(file)
-        setProfilePreview(url)
-    }
-
-    const handleRegister = () => {
-        const { valid, errors } = validateRegistroInput({
-            nombre: fullName,
-            email,
-            telefono,
-            password,
-            confirmarPassword: confirmPassword,
-        })
-        if(!valid){ setErrors(errors); setStatus(''); return }
+    const handleRegister = async () => {
+        setErrors({})
+        setStatus('')
+        
+        if (!username.trim()) {
+            setErrors({ username: 'Ingresa tu nombre de usuario' })
+            return
+        }
+        
+        if (!password.trim()) {
+            setErrors({ password: 'Ingresa tu contraseña' })
+            return
+        }
+        
+        if (password.length < 6) {
+            setErrors({ password: 'Mínimo 6 caracteres' })
+            return
+        }
+        
+        if (password !== confirmPassword) {
+            setErrors({ confirmPassword: 'Las contraseñas no coinciden' })
+            return
+        }
+        
         try {
-            setLogin({ email, token: 'token-demo' });
-            setShowSuccessModal(true);
-            setErrors({});
+            const result = await authService.register(username, password);
+            
+            if (result.success) {
+                setStatus('Registro exitoso')
+                setShowSuccessModal(true)
+            } else {
+                setErrors({ general: result.error })
+                setStatus(result.error)
+            }
         } catch (error) {
-            setStatus('Ocurrió un error al registrar el usuario');
+            setErrors({ general: 'Error de conexión' })
+            setStatus('Error de conexión al servidor')
         }
     }
 
@@ -68,21 +80,6 @@ function Register(){
         <section className="py-4">
             <div className="container">
                 <div className="row g-4">
-                    <div className="col-12 col-md-4 d-flex flex-column align-items-center">
-                        <div className="bg-white rounded shadow-sm p-4 w-100 text-center">
-                            <div className="d-flex justify-content-center mb-3">
-                                <div className="rounded-circle overflow-hidden" style={{ width: 160, height: 160 }}>
-                                    <img
-                                        src={profilePreview || 'https://via.placeholder.com/160'}
-                                        className="w-100 h-100"
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                            </div>
-                            <input type="file" className="form-control" accept="image/*" onChange={handleImageChange} />
-                        </div>
-                    </div>
-
                     <div className="col-12 col-md-8">
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
                             <label className="form-label">Nombre completo</label>
@@ -93,8 +90,18 @@ function Register(){
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="Ej: Juan Pérez"
                             />
-                            {errors.nombre && (
-                                <div className="text-danger small mt-1">{errors.nombre}</div>
+                        </div>
+                        <div className="bg-white rounded shadow-sm p-4 mb-3">
+                            <label className="form-label">Nombre de usuario</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="usuario123"
+                            />
+                            {errors.username && (
+                                <div className="text-danger small mt-1">{errors.username}</div>
                             )}
                         </div>
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
@@ -106,9 +113,6 @@ function Register(){
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="tucorreo@ejemplo.com"
                             />
-                            {errors.email && (
-                                <div className="text-danger small mt-1">{errors.email}</div>
-                            )}
                         </div>
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
                             <label className="form-label">Teléfono <span className="text-muted">(opcional)</span></label>
@@ -119,9 +123,16 @@ function Register(){
                                 onChange={(e) => setTelefono(e.target.value)}
                                 placeholder="+56912345678"
                             />
-                            {errors.telefono && (
-                                <div className="text-danger small mt-1">{errors.telefono}</div>
-                            )}
+                        </div>
+                        <div className="bg-white rounded shadow-sm p-4 mb-3">
+                            <label className="form-label">Dirección <span className="text-muted">(opcional)</span></label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                placeholder="Calle 123, Ciudad"
+                            />
                         </div>
                         <div className="bg-white rounded shadow-sm p-4 mb-3">
                             <label className="form-label">Contraseña</label>
@@ -145,41 +156,14 @@ function Register(){
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="********"
                             />
-                            {errors.confirmarPassword && (
-                                <div className="text-danger small mt-1">{errors.confirmarPassword}</div>
+                            {errors.confirmPassword && (
+                                <div className="text-danger small mt-1">{errors.confirmPassword}</div>
                             )}
                         </div>
-                        <div className="bg-white rounded shadow-sm p-4 mb-3">
-                            <label className="form-label">Dirección</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                                placeholder="Calle 123, Ciudad"
-                            />
-                        </div>
-                        <div className="bg-white rounded shadow-sm p-4 mb-3">
-                            <label className="form-label">Dirección 2 <span className="text-muted">(opcional)</span></label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={address2}
-                                onChange={(e) => setAddress2(e.target.value)}
-                                placeholder="Depto, bloque, piso (opcional)"
-                            />
-                        </div>
-                        <div className="bg-white rounded shadow-sm p-4 mb-3">
-                            <label className="form-label">Referencia <span className="text-muted">(opcional)</span></label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                value={addressRef}
-                                onChange={(e) => setAddressRef(e.target.value)}
-                                placeholder="Cerca de..., entre calles..., portón negro (opcional)"
-                            />
-                        </div>
                         <div className="mt-3 d-grid">
+                            {errors.general && (
+                                <div className="alert alert-danger py-2 mb-2" role="alert">{errors.general}</div>
+                            )}
                             {status && (
                                 <div className="alert alert-info py-2 mb-2" role="status">{status}</div>
                             )}

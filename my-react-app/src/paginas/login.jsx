@@ -1,27 +1,44 @@
 import NavBar from '../components/nav_bar'
 import UnFooter from '../components/C_footer'
 import { useState } from 'react'
-import { validateEmail, validatePassword, setLogin, isLoggedIn } from '../storage/gestionStorage'
+import { authService } from '../services/authService'
 
 function Login(){
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({})
     const [status, setStatus] = useState('')
-    const handleLogin = () => {
-        const { valid, errors } = validateEmail(email)
-        if(!valid){
-            setErrors(errors)
-            setStatus('')
-            return
-        }
+    
+    const handleLogin = async () => {
         setErrors({})
-        setLogin({ email, token: 'token-demo' })
-        if(isLoggedIn()){
-            window.location.href = '/'
+        setStatus('')
+        
+        if (!username.trim()) {
+            setErrors({ username: 'Ingresa tu nombre de usuario' })
             return
         }
-        setStatus('No se pudo iniciar sesión')
+        
+        if (!password.trim()) {
+            setErrors({ password: 'Ingresa tu contraseña' })
+            return
+        }
+        
+        try {
+            const result = await authService.login(username, password);
+            
+            if (result.success) {
+                setStatus('Inicio de sesión exitoso')
+                setTimeout(() => {
+                    window.location.href = '/'
+                }, 1000)
+            } else {
+                setErrors({ general: result.error })
+                setStatus(result.error)
+            }
+        } catch (error) {
+            setErrors({ general: 'Error de conexión' })
+            setStatus('Error de conexión al servidor')
+        }
     }
     return(
         <div className="d-flex flex-column min-vh-100">
@@ -38,16 +55,16 @@ function Login(){
                     <div className="container" style={{ maxWidth: '520px' }}>
                         <div className="bg-white rounded shadow-sm p-4">
                             <div className="mb-3">
-                                <label className="form-label">Correo electrónico</label>
+                                <label className="form-label">Nombre de usuario</label>
                                 <input
-                                    type="email"
+                                    type="text"
                                     className="form-control"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="tucorreo@ejemplo.com"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    placeholder="usuario123"
                                 />
-                                {errors.email && (
-                                    <div className="text-danger small mt-1">{errors.email}</div>
+                                {errors.username && (
+                                    <div className="text-danger small mt-1">{errors.username}</div>
                                 )}
                             </div>
                             <div className="mb-3">
@@ -63,8 +80,8 @@ function Login(){
                                     <div className="text-danger small mt-1">{errors.password}</div>
                                 )}
                             </div>
-                            {status && (
-                                <div className="alert alert-info py-2" role="status">{status}</div>
+                            {errors.general && (
+                                <div className="alert alert-danger py-2" role="alert">{errors.general}</div>
                             )}
                             <button className="btn btn-primary w-100" type="button" onClick={handleLogin}>Iniciar sesión</button>
                         </div>

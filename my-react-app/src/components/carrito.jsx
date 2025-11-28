@@ -1,19 +1,28 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { obtenerCarrito, calcularTotal, vaciarCarrito } from '../storage/gestionStorage.jsx';
-import { Container } from 'react-bootstrap';
+import { Container, Alert, Button } from 'react-bootstrap';
 
 function Carrito() {
     const [listaDelCarrito, setListaDelCarrito] = useState([]);
     const [precioTotal, setPrecioTotal] = useState(0);
+    const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
 
-    useEffect(() => {   //lee el carrito, actualiza el componente para que muestre los productos
+    useEffect(() => {
         const carrito = obtenerCarrito();
         setListaDelCarrito(carrito);
         setPrecioTotal(calcularTotal());
     }, []);
+
+    const accionComprar = () => {
+        vaciarCarrito();
+        setListaDelCarrito([]);
+        setPrecioTotal(0);
+        setMostrarConfirmacion(true);
+        
+        setTimeout(() => {
+            setMostrarConfirmacion(false);
+        }, 5000);
+    };
 
     const accionVaciarCarrito = () => {
         vaciarCarrito();
@@ -78,10 +87,32 @@ function Carrito() {
                 </div>
 
                 <Container>
-                    {listaDelCarrito.length > 0 && (
-                        <button className="btn btn-primary" onClick={accionVaciarCarrito}>
-                            Vaciar carrito
-                        </button>
+                    {mostrarConfirmacion && (
+                        <Alert variant="success" className="mb-3">
+                            <Alert.Heading>¡Compra Exitosa!</Alert.Heading>
+                            <p>¡Productos comprados exitosamente!</p>
+                            <p>Tu carrito ha sido vaciado.</p>
+                        </Alert>
+                    )}
+                    
+                    {listaDelCarrito.length > 0 && !mostrarConfirmacion && (
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <Button variant="secondary" onClick={accionVaciarCarrito}>
+                                Vaciar Carrito
+                            </Button>
+                            <Button variant="success" onClick={accionComprar}>
+                                Comprar Ahora
+                            </Button>
+                        </div>
+                    )}
+                    
+                    {listaDelCarrito.length === 0 && !mostrarConfirmacion && (
+                        <div className="text-center mt-4">
+                            <p>Tu carrito está vacío.</p>
+                            <Button variant="primary" href="/productos">
+                                Ver Productos
+                            </Button>
+                        </div>
                     )}
                 </Container>
             </div>
