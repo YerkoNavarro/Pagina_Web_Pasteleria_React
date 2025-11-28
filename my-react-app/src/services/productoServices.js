@@ -7,16 +7,8 @@ export default class ProductoService  {
     // Obtiene todos los productos disponibles
     // En productoServices.js
     async getAllProductos() {
-        try {
-            console.log('Haciendo petición a:', API);
-            const response = await api.get(API);
-            console.log('Respuesta de la API:', response);
-            
-            return response;  
-        } catch (error) {
-            console.error('Error en la petición:', error);
-            throw error;
-        }
+        const response = await api.get(API);
+        return response;  
     }
 
     async getProductoById(id) {

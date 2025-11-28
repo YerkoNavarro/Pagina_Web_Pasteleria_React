@@ -8,18 +8,29 @@ export const authService = {
         password
       });
       
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        
-        // Decodificar el JWT para obtener roles
-        const roles = authService.getUserRoles(response.data.token);
-        const isAdmin = roles.includes('ADMIN');
-        
-        // Guardar info del usuario con roles correctos
+      // Código JWT inutilizado - ahora usa localStorage
+      // if (response.data.token) {
+      //   localStorage.setItem('token', response.data.token);
+      //   
+      //   // Decodificar el JWT para obtener roles
+      //   const roles = authService.getUserRoles(response.data.token);
+      //   const isAdmin = roles.includes('ADMIN');
+      //   
+      //   // Guardar info del usuario con roles correctos
+      //   const userData = {
+      //     username: username,
+      //     token: response.data.token,
+      //     isAdmin: isAdmin
+      //   };
+      //   localStorage.setItem('login', JSON.stringify(userData));
+      // }
+      
+      // Nueva implementación con localStorage
+      if (response.data) {
         const userData = {
           username: username,
-          token: response.data.token,
-          isAdmin: isAdmin
+          email: username === 'admin' ? 'admin@pasteleria.com' : `${username}@example.com`,
+          isAdmin: username === 'admin'
         };
         localStorage.setItem('login', JSON.stringify(userData));
       }
@@ -52,43 +63,49 @@ export const authService = {
   },
 
   logout: () => {
-    localStorage.removeItem('token');
+    // Código JWT inutilizado
+    // localStorage.removeItem('token');
     localStorage.removeItem('login');
     window.location.href = '/login';
   },
 
-  getToken: () => {
-    return localStorage.getItem('token');
-  },
+  // getToken: () => {
+  //   return localStorage.getItem('token');
+  // },
 
   isLoggedIn: () => {
-    return !!localStorage.getItem('token');
+    // Código JWT inutilizado - ahora usa localStorage
+    // return !!localStorage.getItem('token');
+    const loginData = JSON.parse(localStorage.getItem('login') || '{}');
+    return !!loginData.username;
   },
 
-  // Decodificar JWT para obtener roles
-  getUserRoles: (token = null) => {
-    const jwtToken = token || localStorage.getItem('token');
-    if (!jwtToken) return [];
+  // Código JWT inutilizado - ahora usa localStorage
+  // getUserRoles: (token = null) => {
+  //   const jwtToken = token || localStorage.getItem('token');
+  //   if (!jwtToken) return [];
 
-    try {
-      const payload = JSON.parse(atob(jwtToken.split('.')[1]));
-      console.log('JWT Payload:', payload); // Debug
-      return payload.roles || [];
-    } catch (error) {
-      console.error('Error decoding token:', error);
-      return [];
-    }
-  },
+  //   try {
+  //     const payload = JSON.parse(atob(jwtToken.split('.')[1]));
+  //     console.log('JWT Payload:', payload); // Debug
+  //     return payload.roles || [];
+  //   } catch (error) {
+  //     console.error('Error decoding token:', error);
+  //     return [];
+  //   }
+  // },
 
   isAdmin: () => {
     const loginData = JSON.parse(localStorage.getItem('login') || '{}');
-    if (loginData.isAdmin !== undefined) {
-      return loginData.isAdmin;
-    }
+    return loginData.isAdmin === true;
     
-    // Fallback: verificar desde el token
-    const roles = authService.getUserRoles();
-    console.log('User roles:', roles); // Debug
-    return roles.includes('ADMIN');
+    // Código JWT inutilizado - fallback
+    // if (loginData.isAdmin !== undefined) {
+    //   return loginData.isAdmin;
+    // }
+    // 
+    // const roles = authService.getUserRoles();
+    // console.log('User roles:', roles); // Debug
+    // return roles.includes('ADMIN');
   }
 };
