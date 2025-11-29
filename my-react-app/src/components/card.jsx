@@ -6,11 +6,6 @@ function ProductCard({ nombre, descripcion, precio, imagen, onAgregar, productoD
         onAgregar(productoData); 
     };
     
-    const handleComprarClick = () => {
-        onAgregar(productoData);
-        window.location.href = '/carro';
-    };
-    
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={imagen} />
@@ -18,20 +13,15 @@ function ProductCard({ nombre, descripcion, precio, imagen, onAgregar, productoD
       <Card.Body>
         <Card.Title>{nombre}</Card.Title>
         <Card.Text>
-          ${precio}
+          {precio}
         </Card.Text>
         <Card.Text>
           {descripcion}
         </Card.Text>
         
-        <div className="d-grid gap-2">
-            <button className="btn btn-primary" onClick={handleAgregarClick}>
-                Añadir al Carrito
-            </button>
-            <button className="btn btn-success" onClick={handleComprarClick}>
-                Comprar Ahora
-            </button>
-        </div>
+    <button className="btn btn-primary" onClick={handleAgregarClick}>
+        Añadir al Carrito
+    </button>
       </Card.Body>
     </Card>
   );

@@ -95,7 +95,6 @@ const Admin = () => {
                 setShowModal(false);
                 setProductoForm({ nombre: '', descripcion: '', precio: '', imagen: '' });
                 setEditingProduct(null);
-                
                 const data = await fetchProductos();
                 if (data.success) {
                     setProductos(data.data || []);
